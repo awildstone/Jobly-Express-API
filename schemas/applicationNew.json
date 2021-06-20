@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://our.application.com/applicationNew.schema.json",
+    "type": "object",
+    "properties": {
+      "state": {
+        "enum": [
+          "applied",
+          "accepted",
+          "rejected"
+        ]
+      }
+    },
+    "additionalProperties": false,
+    "required": []
+}
