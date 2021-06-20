@@ -45,6 +45,24 @@ describe("create", function () {
           expect(err instanceof BadRequestError).toBeTruthy();
         }
     });
+
+    test("create new job with equity as a string!", async () => {
+      const badJob = {
+        title: "Fisherman",
+        salary: 60000,
+        equity: "0.67",
+        companyHandle: "c1",
+      };
+      let job = await Job.create(badJob);
+      expect(job).toEqual({
+        id: job.id,
+        title: "Fisherman",
+        salary: 60000,
+        equity: 0.67,
+        companyHandle: "c1"
+    });
+
+    });
 });
 
 /************************************** findAll */
