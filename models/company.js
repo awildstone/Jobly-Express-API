@@ -3,7 +3,6 @@
 const db = require("../db");
 const { BadRequestError, NotFoundError } = require("../expressError");
 const { sqlForPartialUpdate, sqlForFilterQueries } = require("../helpers/sql");
-const { COMPANYQUERYPARAMS } = require("../config");
  
 /** Related functions for companies. */
 
@@ -117,7 +116,8 @@ class Company {
     const companyJobs = await db.query(
       `SELECT id, title, salary, equity
         FROM jobs
-        WHERE company_handle = $1`,
+        WHERE company_handle = $1
+        ORDER BY id`,
         [handle]);
     
     company.jobs = companyJobs.rows

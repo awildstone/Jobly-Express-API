@@ -3,7 +3,6 @@
 const db = require("../db");
 const { BadRequestError, NotFoundError } = require("../expressError");
 const { sqlForPartialUpdate, sqlForFilterQueries } = require("../helpers/sql");
-const { JOBQUERYPARAMS } = require("../config");
  
 /** Related functions for jobs. */
 
