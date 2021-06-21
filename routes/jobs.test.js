@@ -151,7 +151,7 @@ describe("GET /companies?query=value", function () {
         expect(resp.body).toEqual({ jobs: [{...testJobs[1]}, {...testJobs[0]}] });
     });
 
-    test("returns a query for valid equity param", async () => {
+    test("returns a query for valid hasEquity param", async () => {
         let query = "?hasEquity=true";
         const resp = await request(app).get(`/jobs${query}`);
 
@@ -173,11 +173,32 @@ describe("GET /companies?query=value", function () {
         expect(resp.statusCode).toEqual(400);
     });
 
-    test("returns 400 for empty query value", async () => {
+    test("returns 400 for empty title value", async () => {
         let query = "?title= ";
         const resp = await request(app).get(`/jobs${query}`);
 
         expect(resp.statusCode).toEqual(400);
+    });
+
+    test("returns 400 for invalid minSalary value", async () => {
+        let query = "?minSalary=money";
+        const resp = await request(app).get(`/jobs${query}`);
+
+        expect(resp.statusCode).toEqual(400);
+    });
+
+    test("returns 400 for invalid hasEquity value", async () => {
+        let query = "?hasEquity=yes";
+        const resp = await request(app).get(`/jobs${query}`);
+
+        expect(resp.statusCode).toEqual(400);
+    });
+
+    test("returns 404 for null title value", async () => {
+        let query = "?title=null";
+        const resp = await request(app).get(`/jobs${query}`);
+
+        expect(resp.statusCode).toEqual(404);
     });
 });
 

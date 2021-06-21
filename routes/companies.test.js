@@ -166,16 +166,16 @@ describe("GET /companies?query=value", function () {
       expect(resp.statusCode).toEqual(400);
     });
 
-    test("returns 400 for null query value.", async function () {
+    test("returns 404 for null query value.", async function () {
       let query = "?name=null";
       const resp = await request(app).get(`/companies${query}`);
-      expect(resp.statusCode).toEqual(400);
+      expect(resp.statusCode).toEqual(404);
     });
 
-    test("returns 400 for undefined query value.", async function () {
+    test("returns 404 for undefined query value.", async function () {
       let query = "?name=undefined";
       const resp = await request(app).get(`/companies${query}`);
-      expect(resp.statusCode).toEqual(400);
+      expect(resp.statusCode).toEqual(404);
     });
 });
 

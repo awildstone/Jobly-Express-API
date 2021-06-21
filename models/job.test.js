@@ -140,15 +140,6 @@ describe("filter", () => {
     }]);
   });
 
-  test("bad request with invalid queries", async () => {
-    const queries = { name: "manager", salary: "40000"};
-    try {
-      await Job.filter(queries);
-    } catch (err){
-      expect(err instanceof BadRequestError).toBeTruthy();
-    }
-  });
-
   test("not found with no matching results", async () => {
     const queries = { title: "manager", minSalary: "100000"};
     try {
@@ -157,10 +148,7 @@ describe("filter", () => {
       expect(err instanceof NotFoundError).toBeTruthy();
     }
   });
-
   
-
-
 });
 
 

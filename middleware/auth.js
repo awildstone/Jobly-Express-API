@@ -52,9 +52,7 @@ function isAuthorized(req, res, next) {
   try {
     //if there is a username in params
     if (req.params.username) {
-      if (res.locals.user.username !== req.params.username) {
-        if (!res.locals.user.isAdmin) throw new UnauthorizedError("User is not authorized");
-      }
+      if (res.locals.user.username !== req.params.username && !res.locals.user.isAdmin) throw new UnauthorizedError("User is not authorized");
       return next();
     } else {
       //there is no username in params

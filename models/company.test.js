@@ -74,15 +74,6 @@ describe("filter", function () {
     ]);
   });
 
-  test("fails with bad filters", async function () {
-    let queries = { puppies: 'c3', kittens: '3'};
-    try {
-      await Company.filter(queries);
-    } catch (err) {
-      expect(err instanceof BadRequestError).toBeTruthy();
-    }
-  });
-
   test("fails when min is greater than max value", async function () {
     let queries = { minEmployees: '2', maxEmployees: '3'};
     try {

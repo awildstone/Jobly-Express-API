@@ -1,5 +1,5 @@
 const { BadRequestError } = require("../expressError");
-const { REJECTEDVALUES } = require("../config");
+// const { REJECTEDVALUES } = require("../config");
 
 /** 
  * This function accepts two parameters: the json request data (dataToUpdate),
@@ -41,15 +41,9 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql) {
  * { name: 'anderson', minEmployees: '200', maxEmployees: '5000' } => "lower(name) LIKE '%anderson%' AND num_employees >= 200 AND num_employees <= 5000"
  */
 
-function sqlForFilterQueries(queries, allowed) {
+
+function sqlForFilterQueries(queries) {
   const keys = Object.keys(queries);
-  const values = Object.values(queries);
-
-  //confirm all query parameters are in the allowed list of parameters, if not throw error
-  if (!keys.every(key => allowed.includes(key))) throw new BadRequestError(`invalid query parameter`);
-
-  //confirm all query parameter values are not in the forbidden list of values, if not throw error
-  if(values.some(val => REJECTEDVALUES.includes(val))) throw new BadRequestError(`invalid query value`);
 
   //if minEmployees & maxEmployees confirm min is not larger than max, if not throw error
   if (keys.includes('minEmployees') && keys.includes('maxEmployees')) {
@@ -63,7 +57,7 @@ function sqlForFilterQueries(queries, allowed) {
     } else if (colName === 'minSalary') {
       return `salary >= ${+queries[colName]}`
     } else if (colName === 'hasEquity') {
-      return (queries['hasEquity'].toLowerCase() === 'true') ? "equity > 0" : "equity >= 0"
+      return "equity > 0"
     }
     return `lower(${colName}) LIKE '%${queries[colName].toLowerCase()}%'`
     }

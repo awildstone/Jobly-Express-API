@@ -10,6 +10,7 @@ const Job = require("../models/job");
 
 const jobNewSchema = require("../schemas/jobNew.json");
 const jobUpdateSchema = require("../schemas/jobUpdate.json");
+const jobFilterSchema = require("../schemas/jobFilter.json");
 
 const router = new express.Router();
 
@@ -52,7 +53,15 @@ const router = new express.Router();
     try {
       let jobs;
       if (Object.keys(req.query).length !== 0) {
-        jobs = await Job.filter(req.query);
+        let query = req.query;
+        if (query.minSalary) query.minSalary = +query.minSalary;
+        if (query.hasEquity && query.hasEquity === "true") query.hasEquity = true;
+        const validator = jsonschema.validate(query, jobFilterSchema);
+        if (!validator.valid) {
+          const errs = validator.errors.map(e => e.stack);
+          throw new BadRequestError(errs);
+        }
+        jobs = await Job.filter(query);
       } else {
         jobs = await Job.findAll();
       }

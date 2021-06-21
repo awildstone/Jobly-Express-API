@@ -74,7 +74,7 @@ class Company {
    */
 
   static async filter(queries) {
-    const queryString = sqlForFilterQueries(queries, COMPANYQUERYPARAMS);
+    const queryString = sqlForFilterQueries(queries);
 
     const sqlString = `SELECT handle, 
                               name, 

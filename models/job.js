@@ -71,8 +71,7 @@ class Job {
    */
 
   static async filter(queries) {
-    const queryString = sqlForFilterQueries(queries, JOBQUERYPARAMS);
-    console.log(queryString);
+    const queryString = sqlForFilterQueries(queries);
     const sqlString = `SELECT id, 
                               title, 
                               salary, 
